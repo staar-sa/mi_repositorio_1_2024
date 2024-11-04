@@ -3,7 +3,7 @@
     "path": "~/mi_repositorio_1_2024/02_script/ARBOL.R",
     "project_path": "02_script/ARBOL.R",
     "type": "r_source",
-    "hash": "992156044",
+    "hash": "3928198610",
     "contents": "",
     "dirty": false,
     "created": 1730755133932.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "8,0",
-        "scrollLine": "0"
+        "cursorPosition": "26,9",
+        "scrollLine": "13"
     },
     "folds": "",
-    "lastKnownWriteTime": 1730758265,
+    "lastKnownWriteTime": 1730759330,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1730758265279,
+    "last_content_update": 1730759330531,
     "read_only": false,
     "read_only_alternatives": []
 }

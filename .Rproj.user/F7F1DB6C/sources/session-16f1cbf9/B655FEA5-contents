@@ -1,0 +1,84 @@
+##JURASSIC PARK##
+
+#cargar librerias
+library(Biostrings)
+library(ape)
+library(ggtree)
+library(ggplot2)
+
+#leer fasta
+fasta_JP<- readDNAStringSet("datos_crudos_T2/DinoJurassic.fna")
+fasta_JP
+
+#calcula el porcentaje de GC
+width(fasta_JP) #ver cuantas caractares total hay, 1200
+alphabetFrequency(fasta_JP) #(C=396) + (G=324) = 720
+#otra forma de verlo es:
+letterFrequency(fasta_JP, "GC")
+#1200=100%
+#720=??
+porcentaje_gc <- ((720 * 100)/1200)
+porcentaje_gc
+#C seguidas de G
+fasta_JP1 <- as.character(fasta_JP)  #convertir la secuencia a carácter
+CG <- gregexpr("CG", fasta_JP1) #buscar el patrón "CG"
+num_cg <- sum(unlist(CG) != -1) #contar el número de coincidencias,diferente de
+cat("Número de C seguidas de G:", num_cg, "\n")
+porcentaje_cg <- ((116 * 100)/1200)
+porcentaje_cg
+
+#Blastea la secuencia determina e interpreta tu resultado. ¿cuales serian los organismos mas cercanos? ¿Tiene sentido que la secuencia sea de dinosaurios?
+blast_JP<- readDNAStringSet("datos_crudos_T2/seqdump.txt")
+blast_JP #al ser vectores de clonaciones, si tiene sentido
+
+#grafica de e.value
+org <- c("Expression vector pET151-OmyCasp3", "Chimeric dengue virus type 1 vector", "Cloning vector pBR939b", "	Cloning vector pLW17", "	Vector pAT153HIL2", "	Cloning vector pXZ240", "	Biobrick cloning vector BBa_J96007", "nidentified cloning vector", "Cloning vector pAS1-tet", "	Vector pACTEM1")  # Nombres de organismos
+org
+evalues <- c(1e-116, 1e-116,1e-116,1e-116,1e-116,1e-116,1e-116,1e-116,1e-116,1e-116)  # Valores e-value, juro que todos tienen el mismo
+evalues
+resultados_blast <- data.frame(
+  org = org,
+  evalue = evalues,
+  stringsAsFactors = FALSE
+)
+# Mostrar el data frame
+print(resultados_blast)
+
+pdf("resultados_T2/grafica_evalu.pdf")
+# grafica de los e-values
+ggplot(resultados_blast, aes(x = org, y = evalue)) +
+  geom_point(color = "red") +
+  labs(title = "Gráfica de Puntos de E-values", 
+       x = "Organismos", 
+       y = "E-values") +
+  theme() + 
+  ylim(1e-120, 1e-110)  # Ajustar límites 
+dev.off()
+
+##ARBOL
+al_clustal_jp <- msa(blast_JP, method = "ClustalW")
+al_clustal_jp
+dnabin <- as.DNAbin(al_clustal_jp)
+#calcular la matriz de distancias
+m_dis_jp <- dist.dna(dnabin, model = "raw")  # "raw" es la distancia de Hamming
+# Convertir a matriz para visualización
+m_dis_jp <- as.matrix(m_dis_jp)
+# Ver la matriz de distancias y guardarla en resultados
+print(m_dis_jp)
+pdf("resultados_T2/matriz_distancias_jp.pdf")  
+heatmap(m_dis_jp, 
+        main = "Matriz de Distancias - JP",)
+dev.off()
+
+arbol_jp <- nj(m_dis_jp) # Crear el árbol filogenético usando Neighbor-Joining
+
+# Verifica que el árbol se ha creado correctamente
+print(arbol_jp) # Muestra la estructura del árbol
+
+# Graficar el árbol y guardarlo en un PDF
+pdf("resultados_T2/arbol_filogenetico_jp.pdf")  
+ggtree(arbol_jp) +
+  geom_tiplab(size = 3) + # Etiquetar a las "hojas" del árbol
+  theme_tree() + # Ajustar la estética del árbol
+  labs(title = "Árbol Filogenético - JP") # Título
+dev.off() # Cierra el dispositivo PDF
