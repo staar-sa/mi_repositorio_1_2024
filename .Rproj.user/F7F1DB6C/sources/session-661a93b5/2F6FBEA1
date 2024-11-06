@@ -1,11 +1,11 @@
 {
     "id": "2F6FBEA1",
-    "path": null,
-    "project_path": null,
+    "path": "~/mi_repositorio_1_2024/arbol con ggtree.R",
+    "project_path": "arbol con ggtree.R",
     "type": "r_source",
-    "hash": "0",
+    "hash": "2279598894",
     "contents": "",
-    "dirty": true,
+    "dirty": false,
     "created": 1730906696230.0,
     "source_on_save": false,
     "relative_order": 4,
@@ -17,11 +17,11 @@
         "scrollLine": "24"
     },
     "folds": "",
-    "lastKnownWriteTime": 8316293035020546387,
-    "encoding": "",
+    "lastKnownWriteTime": 1730910000,
+    "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1730909884621,
+    "last_content_update": 1730910000724,
     "read_only": false,
     "read_only_alternatives": []
 }
