@@ -5,6 +5,8 @@ library(Biostrings)
 library(ape)
 library(ggtree)
 library(ggplot2)
+library (msa)
+library(ggmsa)
 
 
 # Convertir los alineamientos a formato 'seqinr'
@@ -25,3 +27,5 @@ pdf("03_resultados/arbol_muscle.pdf")
 arbol_muscle <- nj(alineamiento_muscle_dnabin)
 plot(arbol_muscle, main = "Árbol filogenético de alineamiento con Muscle")
 dev.off()
+
+
